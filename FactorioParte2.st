@@ -32,7 +32,7 @@ cantidadDeMenasDe: unMineral
 
 ! !
 
-!Caja class methodsFor: 'as yet unclassified' stamp: 'asdsa 5/8/2021 16:28:20'!
+!Caja class methodsFor: 'as yet unclassified' stamp: 'NM 5/8/2021 17:34:35'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -73,7 +73,7 @@ destino: UnContenedor
 
 	! !
 
-!CintaA class methodsFor: 'as yet unclassified' stamp: 'asdsa 5/8/2021 16:28:20'!
+!CintaA class methodsFor: 'as yet unclassified' stamp: 'NM 5/8/2021 17:34:35'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -124,7 +124,7 @@ destino: UnContenedor
 
 	! !
 
-!CintaB class methodsFor: 'as yet unclassified' stamp: 'asdsa 5/8/2021 16:28:20'!
+!CintaB class methodsFor: 'as yet unclassified' stamp: 'NM 5/8/2021 17:34:35'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -200,7 +200,7 @@ extraer
 	self sacarEnergia: energiaConsumida.
 	^destino agregarMenas: (self conjuntoDeMenasDeCarbonCantidad: cantidadDeMenas).! !
 
-!ExtractorDeCarbon class methodsFor: 'as yet unclassified' stamp: 'asdsa 5/8/2021 16:28:20'!
+!ExtractorDeCarbon class methodsFor: 'as yet unclassified' stamp: 'NM 5/8/2021 17:34:35'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -280,7 +280,7 @@ extraer
 	self sacarEnergia: energiaConsumida.
 	^destino agregarMenas: (self conjuntoDeMenasDeHierroCantidad: cantidadDeMenas).! !
 
-!ExtractorDeHierro class methodsFor: 'as yet unclassified' stamp: 'asdsa 5/8/2021 16:28:20'!
+!ExtractorDeHierro class methodsFor: 'as yet unclassified' stamp: 'NM 5/8/2021 17:34:35'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -369,13 +369,14 @@ DenotativeObject subclass: #PruebasDeFactorio
 PruebasDeFactorio class
 	instanceVariableNames: ''!
 
-!PruebasDeFactorio class methodsFor: 'as yet unclassified' stamp: 'asdsa 5/8/2021 16:27:10'!
+!PruebasDeFactorio class methodsFor: 'as yet unclassified' stamp: 'NM 5/8/2021 17:34:28'!
 testEscenarioExtractorCaja
 	ExtractorDeCarbon ponerEnCeroLaEnergia.
 	ExtractorDeCarbon agregarEnergia: 5 * joule.
 	ExtractorDeCarbon destino: Caja.
 	Caja vaciar.
-	ExtractorDeCarbon extraer.
+	ExtractorDeCarbon extraer.	
+	Assert that: Caja cantidadDeMenas isEqualTo: 1.
 	Assert that: (Caja cantidadDeMenasDe: 'carbon') isEqualTo: 1.
 ! !
 
