@@ -253,19 +253,19 @@ isEmpty
 	^active isEmpty and: [ suspended isEmpty ]! !
 
 
-!CustomerBook methodsFor: 'signal errors' stamp: 'a 5/18/2021 23:29:51'!
+!CustomerBook methodsFor: 'signal errors' stamp: 'a 5/20/2021 15:53:07'!
 signalCustomerAlreadyExists 
 
-	self lanzarSeñal: self class customerAlreadyExistsErrorMessage.! !
+	self lanzarSeñalDeError: self class customerAlreadyExistsErrorMessage.! !
 
-!CustomerBook methodsFor: 'signal errors' stamp: 'a 5/18/2021 23:30:30'!
+!CustomerBook methodsFor: 'signal errors' stamp: 'a 5/20/2021 15:52:56'!
 signalCustomerNameCannotBeEmpty 
 
-	self lanzarSeñal: self class customerCanNotBeEmptyErrorMessage ! !
+	self lanzarSeñalDeError: self class customerCanNotBeEmptyErrorMessage ! !
 
 
-!CustomerBook methodsFor: 'ayudantes' stamp: 'a 5/18/2021 23:17:48'!
-lanzarSeñal: unMensajeDeError
+!CustomerBook methodsFor: 'ayudantes' stamp: 'a 5/20/2021 15:52:34'!
+lanzarSeñalDeError: unMensajeDeError
 
 	 self error: unMensajeDeError.! !
 
