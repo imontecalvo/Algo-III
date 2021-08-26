@@ -418,11 +418,11 @@ Object subclass: #MarsRover
 	poolDictionaries: ''
 	category: 'MarsRover-Solucion'!
 
-!MarsRover methodsFor: 'initialization' stamp: 'Nacho 7/22/2021 17:02:52'!
+!MarsRover methodsFor: 'initialization' stamp: 'Nacho 8/26/2021 16:59:31'!
 initializeStartingAt: aPosition heading: aCardinalPoint 
 	
-	position := MarsRoverVariableProxy newWithInitialValue: 0@0 andUpdateMessage: #positionChangedTo:.
-	head := MarsRoverVariableProxy newWithInitialValue: (MarsRoverHead of: self facing: aCardinalPoint) andUpdateMessage: #headingChangedTo:.
+	position := RoverVariableProxy newWithInitialValue: 0@0 andUpdateMessage: #positionChangedTo:.
+	head := RoverVariableProxy newWithInitialValue: (MarsRoverHead of: self facing: aCardinalPoint) andUpdateMessage: #headingChangedTo:.
 	! !
 
 
@@ -578,6 +578,11 @@ Object subclass: #MarsRoverHead
 	poolDictionaries: ''
 	category: 'MarsRover-Solucion'!
 
+!MarsRoverHead methodsFor: 'as yet unclassified' stamp: 'Nacho 8/26/2021 17:00:40'!
+accept: anObserver
+
+	^self subclassResponsibility.! !
+
 !MarsRoverHead methodsFor: 'as yet unclassified' stamp: 'LL 6/30/2021 16:17:57'!
 initializeOf: aMarsRover
 
@@ -643,6 +648,11 @@ MarsRoverHead subclass: #MarsRoverHeadFacingEast
 	poolDictionaries: ''
 	category: 'MarsRover-Solucion'!
 
+!MarsRoverHeadFacingEast methodsFor: 'as yet unclassified' stamp: 'Nacho 8/26/2021 17:02:36'!
+accept: aVisitor
+
+	aVisitor visitHeadFacingEast.! !
+
 !MarsRoverHeadFacingEast methodsFor: 'as yet unclassified' stamp: 'LL 6/30/2021 19:48:36'!
 movingBackwards
 
@@ -690,6 +700,11 @@ MarsRoverHead subclass: #MarsRoverHeadFacingNorth
 	poolDictionaries: ''
 	category: 'MarsRover-Solucion'!
 
+!MarsRoverHeadFacingNorth methodsFor: 'as yet unclassified' stamp: 'Nacho 8/26/2021 17:02:44'!
+accept: aVisitor
+
+	aVisitor visitHeadFacingNorth.! !
+
 !MarsRoverHeadFacingNorth methodsFor: 'as yet unclassified' stamp: 'LL 6/30/2021 19:48:36'!
 movingBackwards
 
@@ -728,6 +743,11 @@ MarsRoverHead subclass: #MarsRoverHeadFacingSouth
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRover-Solucion'!
+
+!MarsRoverHeadFacingSouth methodsFor: 'as yet unclassified' stamp: 'Nacho 8/26/2021 17:02:50'!
+accept: aVisitor
+
+	aVisitor visitHeadFacingSouth.! !
 
 !MarsRoverHeadFacingSouth methodsFor: 'as yet unclassified' stamp: 'LL 6/30/2021 19:48:36'!
 movingBackwards
@@ -768,6 +788,11 @@ MarsRoverHead subclass: #MarsRoverHeadFacingWest
 	poolDictionaries: ''
 	category: 'MarsRover-Solucion'!
 
+!MarsRoverHeadFacingWest methodsFor: 'as yet unclassified' stamp: 'Nacho 8/26/2021 17:02:55'!
+accept: aVisitor
+
+	aVisitor visitHeadFacingWest.! !
+
 !MarsRoverHeadFacingWest methodsFor: 'as yet unclassified' stamp: 'LL 6/30/2021 19:48:36'!
 movingBackwards
 
@@ -800,30 +825,8 @@ whenFacing: aCardinalPoint
 	^aCardinalPoint = #West! !
 
 
-!classDefinition: #MarsRoverObserver category: 'MarsRover-Solucion'!
-Object subclass: #MarsRoverObserver
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'MarsRover-Solucion'!
-
-!MarsRoverObserver methodsFor: 'private' stamp: 'Nacho 7/22/2021 18:13:45'!
-headingChangedTo: aHead andSend: aMessage to: xxx
-
-	(aHead isKindOf: MarsRoverHeadFacingEast) ifTrue: [ aMessage sendTo: xxx with: 'Facing East'].
-	(aHead isKindOf: MarsRoverHeadFacingWest) ifTrue: [aMessage sendTo: xxx with: 'Facing West'].
-	(aHead isKindOf: MarsRoverHeadFacingNorth) ifTrue: [aMessage sendTo: xxx with:'Facing North'].
-	(aHead isKindOf: MarsRoverHeadFacingSouth) ifTrue: [aMessage sendTo: xxx with:'Facing South'].! !
-
-
-!MarsRoverObserver methodsFor: 'initialization' stamp: 'Nacho 7/22/2021 18:23:14'!
-initialize
-
-	^self subclassResponsibility.! !
-
-
 !classDefinition: #MarsRoverLog category: 'MarsRover-Solucion'!
-MarsRoverObserver subclass: #MarsRoverLog
+Object subclass: #MarsRoverLog
 	instanceVariableNames: 'log'
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -841,38 +844,73 @@ initialize
 	log := OrderedCollection new.! !
 
 
-!MarsRoverLog methodsFor: 'changes' stamp: 'Nacho 7/22/2021 18:24:38'!
+!MarsRoverLog methodsFor: 'changes' stamp: 'Nacho 8/26/2021 17:00:40'!
 headingChangedTo: aHead
-
-	super headingChangedTo: aHead andSend: #add: to: log.! !
+	
+	aHead accept: self.! !
 
 !MarsRoverLog methodsFor: 'changes' stamp: 'Nacho 7/22/2021 17:27:07'!
 positionChangedTo: aPosition
 
 	^log add: aPosition asString! !
 
+!MarsRoverLog methodsFor: 'changes' stamp: 'Nacho 8/26/2021 17:01:32'!
+visitHeadFacingEast
+
+	log add: 'Facing East'.! !
+
+!MarsRoverLog methodsFor: 'changes' stamp: 'Nacho 8/26/2021 17:01:42'!
+visitHeadFacingNorth
+
+	log add: 'Facing North'.! !
+
+!MarsRoverLog methodsFor: 'changes' stamp: 'Nacho 8/26/2021 17:01:54'!
+visitHeadFacingSouth
+
+	log add: 'Facing South'.! !
+
+!MarsRoverLog methodsFor: 'changes' stamp: 'Nacho 8/26/2021 17:02:03'!
+visitHeadFacingWest
+
+	log add: 'Facing West'.! !
+
 
 !classDefinition: #MarsRoverWindow category: 'MarsRover-Solucion'!
-MarsRoverObserver subclass: #MarsRoverWindow
+Object subclass: #MarsRoverWindow
 	instanceVariableNames: 'positionText headingText'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRover-Solucion'!
 
-!MarsRoverWindow methodsFor: 'changes' stamp: 'Nacho 7/22/2021 18:18:00'!
+!MarsRoverWindow methodsFor: 'changes' stamp: 'Nacho 8/26/2021 17:00:40'!
 headingChangedTo: aHead
 	
-	super headingChangedTo: aHead andSend: #newHeadingText: to: self.! !
-
-!MarsRoverWindow methodsFor: 'changes' stamp: 'Nacho 7/22/2021 18:15:01'!
-newHeadingText: aHeadingText
-
-	headingText := aHeadingText.! !
+	aHead accept: self.! !
 
 !MarsRoverWindow methodsFor: 'changes' stamp: 'Nacho 7/22/2021 17:27:55'!
 positionChangedTo: aPosition
 
 	positionText := aPosition asString.! !
+
+!MarsRoverWindow methodsFor: 'changes' stamp: 'Nacho 8/26/2021 17:01:32'!
+visitHeadFacingEast
+
+	headingText := 'Facing East'.! !
+
+!MarsRoverWindow methodsFor: 'changes' stamp: 'Nacho 8/26/2021 17:01:42'!
+visitHeadFacingNorth
+
+	headingText := 'Facing North'.! !
+
+!MarsRoverWindow methodsFor: 'changes' stamp: 'Nacho 8/26/2021 17:01:55'!
+visitHeadFacingSouth
+
+	headingText := 'Facing South'.! !
+
+!MarsRoverWindow methodsFor: 'changes' stamp: 'Nacho 8/26/2021 17:02:03'!
+visitHeadFacingWest
+
+	headingText := 'Facing West'.! !
 
 
 !MarsRoverWindow methodsFor: 'main protocol' stamp: 'Nacho 7/22/2021 17:28:02'!
@@ -898,39 +936,39 @@ initialize
 	headingText := ''.! !
 
 
-!classDefinition: #MarsRoverVariableProxy category: 'MarsRover-Solucion'!
-Object subclass: #MarsRoverVariableProxy
+!classDefinition: #RoverVariableProxy category: 'MarsRover-Solucion'!
+Object subclass: #RoverVariableProxy
 	instanceVariableNames: 'currentValue observers updateMessage'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRover-Solucion'!
 
-!MarsRoverVariableProxy methodsFor: 'private protocol' stamp: 'Nacho 7/22/2021 15:49:19'!
+!RoverVariableProxy methodsFor: 'private protocol' stamp: 'Nacho 7/22/2021 15:49:19'!
 addObserver: anObserver
 
 	observers add: anObserver.
 ! !
 
-!MarsRoverVariableProxy methodsFor: 'private protocol' stamp: 'Nacho 7/22/2021 18:36:22'!
+!RoverVariableProxy methodsFor: 'private protocol' stamp: 'Nacho 7/22/2021 18:36:22'!
 doesNotUnderstand: aMessage
 
 	^aMessage sendTo: currentValue.! !
 
-!MarsRoverVariableProxy methodsFor: 'private protocol' stamp: 'Nacho 7/22/2021 16:43:28'!
+!RoverVariableProxy methodsFor: 'private protocol' stamp: 'Nacho 7/22/2021 16:43:28'!
 notifyChange
 
 	observers do: [:anObserver | updateMessage sendTo: anObserver with: currentValue].
 
 ! !
 
-!MarsRoverVariableProxy methodsFor: 'private protocol' stamp: 'Nacho 7/22/2021 15:52:42'!
+!RoverVariableProxy methodsFor: 'private protocol' stamp: 'Nacho 7/22/2021 15:52:42'!
 updateValue: newValue
 
 	currentValue := newValue.
 
 ! !
 
-!MarsRoverVariableProxy methodsFor: 'private protocol' stamp: 'Nacho 7/22/2021 15:52:20'!
+!RoverVariableProxy methodsFor: 'private protocol' stamp: 'Nacho 7/22/2021 15:52:20'!
 value
 
 	^currentValue.
@@ -938,7 +976,7 @@ value
 ! !
 
 
-!MarsRoverVariableProxy methodsFor: 'initialization' stamp: 'Nacho 7/22/2021 16:44:00'!
+!RoverVariableProxy methodsFor: 'initialization' stamp: 'Nacho 7/22/2021 16:44:00'!
 initializeWithInitialValue: aValue andUpdateMessage: aMessage
 
 	currentValue := aValue.
@@ -949,11 +987,11 @@ initializeWithInitialValue: aValue andUpdateMessage: aMessage
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'MarsRoverVariableProxy class' category: 'MarsRover-Solucion'!
-MarsRoverVariableProxy class
+!classDefinition: 'RoverVariableProxy class' category: 'MarsRover-Solucion'!
+RoverVariableProxy class
 	instanceVariableNames: ''!
 
-!MarsRoverVariableProxy class methodsFor: 'as yet unclassified' stamp: 'Nacho 7/22/2021 18:33:58'!
+!RoverVariableProxy class methodsFor: 'as yet unclassified' stamp: 'Nacho 7/22/2021 18:33:58'!
 newWithInitialValue: aValue andUpdateMessage: aMessage
 
 	^self new initializeWithInitialValue: aValue andUpdateMessage: aMessage.! !
