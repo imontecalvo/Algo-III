@@ -506,15 +506,6 @@ transactions
 
 	self subclassResponsibility ! !
 
-!Account methodsFor: 'main protocol' stamp: 'Nacho 7/12/2021 18:22:08'!
-transferNet
-	
-	^self transactions 
-		inject: 0*peso
-		into: [ :currentBalance :transaction | 
-			((transaction isKindOf: TransferDepositLeg) or: [transaction isKindOf: TransferWithdrawLeg ]) ifTrue: [transaction affectBalance: currentBalance] 
-																							     ifFalse: [currentBalance]].! !
-
 
 !Account methodsFor: 'private' stamp: 'HAW 5/25/2019 12:23:27'!
 addTransactionsTo: aCollectionOfTransactions
@@ -567,7 +558,6 @@ add: accountToAdd
 addTransactionsTo: aCollectionOfTransactions
 
 	accounts do: [ :anAccount | anAccount addTransactionsTo: aCollectionOfTransactions ]! !
-
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -1009,22 +999,12 @@ Object subclass: #Transfer
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Solucion'!
 
-!Transfer methodsFor: 'value' stamp: 'LL 9/20/2020 21:13:00'!
-value
-
-	^value! !
-
-
-!Transfer methodsFor: 'accessing' stamp: 'LL 9/20/2020 22:39:46'!
-depositLeg
-
-	^depositLeg! !
-
-!Transfer methodsFor: 'accessing' stamp: 'LL 9/20/2020 21:25:56'!
-withdrawLeg
-	
-	^withdrawLeg! !
-
+!Transfer methodsFor: 'initialization' stamp: 'JMB 3/1/2021 17:45:39'!
+initializeOf: anAmountToTransfer from: aWithdrawTransferLeg to: aDepositTransferLeg at: aDateAndTime 
+	amount := anAmountToTransfer.
+	withdrawLeg := aWithdrawTransferLeg.
+	depositLeg := aDepositTransferLeg.
+	moment := aDateAndTime.! !
 
 !Transfer methodsFor: 'initialization' stamp: 'LL 9/20/2020 21:25:21'!
 initializeWith: aValue withdrawLeg: aWithdraw depositLeg: aDeposit
@@ -1033,11 +1013,70 @@ initializeWith: aValue withdrawLeg: aWithdraw depositLeg: aDeposit
 	withdrawLeg := aWithdraw.
 	depositLeg := aDeposit! !
 
+
+!Transfer methodsFor: 'accessing' stamp: 'JMB 3/1/2021 17:46:31'!
+amount
+	^ amount! !
+
+!Transfer methodsFor: 'accessing' stamp: 'LL 9/20/2020 22:39:46'!
+depositLeg
+
+	^depositLeg! !
+
+!Transfer methodsFor: 'accessing' stamp: 'JMB 3/1/2021 17:46:43'!
+moment
+	^ moment! !
+
+!Transfer methodsFor: 'accessing' stamp: 'LL 9/20/2020 21:25:56'!
+withdrawLeg
+	
+	^withdrawLeg! !
+
+
+!Transfer methodsFor: 'value' stamp: 'LL 9/20/2020 21:13:00'!
+value
+
+	^value! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'Transfer class' category: 'ServiciosFinancieros-Solucion'!
 Transfer class
 	instanceVariableNames: ''!
+
+!Transfer class methodsFor: 'instance creation' stamp: 'LL 9/20/2020 23:11:34'!
+amount: anAmountOfMoney from: originAccount to: destinationAccount 
+	
+	| transfer depositLeg withdrawLeg |
+	
+	self assert: anAmountOfMoney canBeTransferedTo: destinationAccount from: originAccount.
+	
+	transfer := self new.
+	
+	withdrawLeg := TransferWithdrawLeg of: transfer on: originAccount.
+	depositLeg := TransferDepositLeg of: transfer on: destinationAccount.
+	
+	^transfer initializeWith: anAmountOfMoney withdrawLeg: withdrawLeg depositLeg: depositLeg
+	
+	
+	! !
+
+!Transfer class methodsFor: 'instance creation' stamp: 'JMB 3/1/2021 17:21:52'!
+depositLeg: aDepositTransferLeg withDrawLeg: aWithdrawTransferLeg 
+	^self new initializeDepositLeg: aDepositTransferLeg withDrawLeg: aWithdrawTransferLeg ! !
+
+!Transfer class methodsFor: 'instance creation' stamp: 'JMB 3/1/2021 17:45:26'!
+of: anAmountToTransfer from: aSourceWallet to: aTargetWallet at: aDateAndTime   
+	| transfer aDepositTransferLeg aWithdrawTransferLeg |
+	transfer := self new.
+	aDepositTransferLeg := DepositTransferLeg newFor: transfer.
+	aWithdrawTransferLeg := WithdrawTransferLeg newFor: transfer.
+	transfer  initializeOf: anAmountToTransfer from: aWithdrawTransferLeg to: aDepositTransferLeg at: aDateAndTime.
+	aSourceWallet register: aWithdrawTransferLeg.
+	aTargetWallet register: aDepositTransferLeg.
+	^ transfer
+	! !
+
 
 !Transfer class methodsFor: 'errors' stamp: 'LL 9/20/2020 22:57:30'!
 cannotTransferToOriginErrorDescription
@@ -1075,21 +1114,3 @@ assertCanTransfer: anAmountOfMoney
 assertCanTransferTo: destinationAccount from: originAccount
 
 	^ originAccount = destinationAccount ifTrue: [ self signalCannotTransferToOrigin ]! !
-
-
-!Transfer class methodsFor: 'instance creation' stamp: 'LL 9/20/2020 23:11:34'!
-amount: anAmountOfMoney from: originAccount to: destinationAccount 
-	
-	| transfer depositLeg withdrawLeg |
-	
-	self assert: anAmountOfMoney canBeTransferedTo: destinationAccount from: originAccount.
-	
-	transfer := self new.
-	
-	withdrawLeg := TransferWithdrawLeg of: transfer on: originAccount.
-	depositLeg := TransferDepositLeg of: transfer on: destinationAccount.
-	
-	^transfer initializeWith: anAmountOfMoney withdrawLeg: withdrawLeg depositLeg: depositLeg
-	
-	
-	! !
