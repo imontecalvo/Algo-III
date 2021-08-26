@@ -145,7 +145,7 @@ Object subclass: #Numero
 		[ ^self class with: (numerator * aMultiplier numerator) over: (denominator * aMultiplier denominator) ]."
 	self subclassResponsibility.
 		
-	self error: 'Tipo de número no soportado'
+	self error: 'Tipo de nÃºmero no soportado'
 	! !
 
 !Numero methodsFor: 'arithmetic operations' stamp: 'a 5/20/2021 21:17:31'!
@@ -163,7 +163,7 @@ Object subclass: #Numero
 		^ self class with: newNumerator over: newDenominator ]."
 	self subclassResponsibility.
 	
-	self error: 'Tipo de número no soportado'
+	self error: 'Tipo de nÃºmero no soportado'
 	! !
 
 !Numero methodsFor: 'arithmetic operations' stamp: 'a 5/20/2021 21:21:12'!
@@ -274,7 +274,7 @@ hash
 		[ ^self class with: value // aDivisor integerValue ]."
 	self subclassResponsibility.
 		
-	self error: 'Tipo de número no soportado'! !
+	self error: 'Tipo de nÃºmero no soportado'! !
 
 !Numero methodsFor: 'arithmetic operations - private' stamp: 'a 5/20/2021 23:04:17'!
 greatestCommonDivisorWith: anEntero 
@@ -283,7 +283,7 @@ greatestCommonDivisorWith: anEntero
 		[ ^self class with: (value gcd: anEntero integerValue) ]."
 	self subclassResponsibility.
 		
-	self error: 'Tipo de número no soportado'! !
+	self error: 'Tipo de nÃºmero no soportado'! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
