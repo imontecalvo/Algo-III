@@ -256,16 +256,16 @@ isEmpty
 !CustomerBook methodsFor: 'signal errors' stamp: 'a 5/20/2021 15:53:07'!
 signalCustomerAlreadyExists 
 
-	self lanzarSeñalDeError: self class customerAlreadyExistsErrorMessage.! !
+	self lanzarSeÃ±alDeError: self class customerAlreadyExistsErrorMessage.! !
 
 !CustomerBook methodsFor: 'signal errors' stamp: 'a 5/20/2021 15:52:56'!
 signalCustomerNameCannotBeEmpty 
 
-	self lanzarSeñalDeError: self class customerCanNotBeEmptyErrorMessage ! !
+	self lanzarSeÃ±alDeError: self class customerCanNotBeEmptyErrorMessage ! !
 
 
 !CustomerBook methodsFor: 'ayudantes' stamp: 'a 5/20/2021 15:52:34'!
-lanzarSeñalDeError: unMensajeDeError
+lanzarSeÃ±alDeError: unMensajeDeError
 
 	 self error: unMensajeDeError.! !
 
