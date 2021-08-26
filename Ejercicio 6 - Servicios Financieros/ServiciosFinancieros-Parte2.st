@@ -24,7 +24,7 @@ test02AccountWithOneDepositSummaryShowsTheDepositAndBalance
 	Deposit register: 50*peso on: anAccount.
 	anAccountSummary := AccountSummary for: anAccount.
 	
-	self assert: anAccountSummary summary equals: (OrderedCollection with: 'Dep髎ito por 50 pesos' with:'Balance = 50 pesos').! !
+	self assert: anAccountSummary summary equals: (OrderedCollection with: 'Dep贸sito por 50 pesos' with:'Balance = 50 pesos').! !
 
 !AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'Nacho 7/13/2021 01:34:46'!
 test03AccountWithOneWithdrawSummaryShowsTheWithdrawAndBalance
@@ -35,7 +35,7 @@ test03AccountWithOneWithdrawSummaryShowsTheWithdrawAndBalance
 	Withdraw register: 50*peso on: anAccount.
 	anAccountSummary := AccountSummary for: anAccount.
 	
-	self assert: anAccountSummary summary equals: (OrderedCollection with: 'Extracci髇 por 50 pesos' with:'Balance = -50 pesos').! !
+	self assert: anAccountSummary summary equals: (OrderedCollection with: 'Extracci贸n por 50 pesos' with:'Balance = -50 pesos').! !
 
 !AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'Nacho 7/13/2021 01:37:10'!
 test04SenderAccountWithOneTransferSummaryShowsTheTransferWithdrawAndBalance
@@ -80,8 +80,8 @@ test06AccountWithMultipleTransactionsSummaryShowsTransactionsAndBalance
 	
 	mainAccountSummary := AccountSummary for: mainAccount.
 	
-	self assert: mainAccountSummary summary equals: (OrderedCollection with: 'Dep髎ito por 200 pesos'
-																with: 'Extracci髇 por 100 pesos'
+	self assert: mainAccountSummary summary equals: (OrderedCollection with: 'Dep贸sito por 200 pesos'
+																with: 'Extracci贸n por 100 pesos'
 																with: 'Salida por transferencia de 50 pesos'
 																with: 'Entrada por transferencia de 25 pesos'
 																with:'Balance = 75 pesos').! !
@@ -101,8 +101,8 @@ test07PortfolioSummaryShowsTransactionsAndBalance
 	
 	composedPortofolioAccountSummary := AccountSummary for: composedPortofolio.
 	
-	self assert: composedPortofolioAccountSummary summary equals: (OrderedCollection with: 'Dep髎ito por 100 pesos'
-																	   with: 'Extracci髇 por 50 pesos'
+	self assert: composedPortofolioAccountSummary summary equals: (OrderedCollection with: 'Dep贸sito por 100 pesos'
+																	   with: 'Extracci贸n por 50 pesos'
 																	   with: 'Balance = 50 pesos').
 	
 	! !
@@ -894,7 +894,7 @@ summary
 !AccountSummary methodsFor: 'visitors' stamp: 'Nacho 7/15/2021 00:52:38'!
 visitDeposit: aDeposit
 
-	^'Dep髎ito por ', ((aDeposit value) asString).! !
+	^'Dep贸sito por ', ((aDeposit value) asString).! !
 
 !AccountSummary methodsFor: 'visitors' stamp: 'Nacho 7/15/2021 00:52:51'!
 visitTransferDeposit: aTransferDeposit
@@ -909,7 +909,7 @@ visitTransferWithdraw: aTransferWithdraw
 !AccountSummary methodsFor: 'visitors' stamp: 'Nacho 7/15/2021 00:53:13'!
 visitWithdraw: aWithdraw
 
-	^'Extracci髇 por ', ((aWithdraw value) asString).! !
+	^'Extracci贸n por ', ((aWithdraw value) asString).! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
