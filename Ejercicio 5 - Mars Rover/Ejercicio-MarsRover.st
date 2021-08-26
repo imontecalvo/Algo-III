@@ -290,7 +290,7 @@ processCommand: aCommand forTheRover: aRover
 		se vuelva mas confuso y poco practico.
 		
 		- En segundo lugar, en caso de querer agregar nuevos comandos no se vuelve tedioso el proceso de modificacion del codigo existente 
-		ya que solo habria que añadir cuatro IFs (uno para cada orientacion) pues el numero de orientaciones es finito y no puede aumentar en 
+		ya que solo habria que aÃ±adir cuatro IFs (uno para cada orientacion) pues el numero de orientaciones es finito y no puede aumentar en 
 		un futuro."! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
