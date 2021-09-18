@@ -9,11 +9,11 @@
 - Nociones de Objeto, Mensaje y Métodos.
 - Colaboraciones entre objetos.
 - Uso de Metaprogramación en Smalltalk.
-- Modelación con objetos.
+- Modelado con objetos.
 - Reglas y Heurísticas de diseño que favorecen a la creación de código escalable y sostenible en el tiempo.
 - Clasificación y Subclasificación (Herencia).
 - Polimorfismo.
-- Eliminacion de Codigo Repetido.
+- Eliminacion de Código Repetido.
 - Reemplazo de IFs con Polimorfismo.
 - Double Dispatch y Switch Dinámico.
 - Test-driven development (TDD)
