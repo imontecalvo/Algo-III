@@ -1,6 +1,6 @@
 # Algoritmos III [75.07] FIUBA
 
-#### Se encuentran presentes los ejercicios realizados a lo largo de la cursada de Algoritmos III Cátedra Leveroni.
+#### Se encuentran presentes los ejercicios realizados a lo largo de la cursada de Algoritmos III Cátedra Leveroni 1C2021.
 
 ## Contenidos de la materia:
 
